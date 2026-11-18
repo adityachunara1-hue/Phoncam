@@ -15,7 +15,9 @@ jobs:
           
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
-        
+        with:
+          packages: '' # Bypasses the removed 'tools' package
+          
       - name: Accept Android SDK Licenses
         run: yes | sdkmanager --licenses || true
         
