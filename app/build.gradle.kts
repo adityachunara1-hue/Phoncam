@@ -30,4 +30,5 @@ dependencies {
     implementation("androidx.camera:camera-core:1.3.4")
     implementation("org.nanohttpd:nanohttpd:2.3.1")
     implementation("androidx.core:core-ktx:1.12.0")
+    implementation("androidx.appcompat:appcompat:1.6.1")
 }
