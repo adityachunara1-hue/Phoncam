@@ -5,7 +5,7 @@ import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.util.Size
-import androidx.activity.ComponentActivity
+import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.ImageProxy
@@ -14,7 +14,7 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import java.io.ByteArrayOutputStream
 
-class MainActivity : ComponentActivity() {
+class MainActivity : AppCompatActivity() {
     @Volatile private var latestJpeg: ByteArray? = null
     private lateinit var server: MjpegServer
 
@@ -45,7 +45,6 @@ class MainActivity : ComponentActivity() {
                 .setOutputImageFormat(ImageAnalysis.OUTPUT_IMAGE_FORMAT_RGBA_8888)
                 .build()
 
-            // Fixed the "this" reference here to use this@MainActivity
             analysis.setAnalyzer(ContextCompat.getMainExecutor(this@MainActivity)) { image: ImageProxy ->
                 try {
                     val bmp = image.toBitmap()
@@ -55,7 +54,6 @@ class MainActivity : ComponentActivity() {
                 } finally { image.close() }
             }
             provider.unbindAll()
-            // Fixed the "this" reference here as well
             provider.bindToLifecycle(this@MainActivity, CameraSelector.DEFAULT_BACK_CAMERA, analysis)
         }, ContextCompat.getMainExecutor(this@MainActivity))
     }
