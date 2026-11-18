@@ -8,6 +8,8 @@ import android.util.Size
 import androidx.activity.ComponentActivity
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageAnalysis
+import androidx.camera.core.ImageProxy
+import androidx.camera.core.ImageProxy.toBitmap
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import java.io.ByteArrayOutputStream
@@ -43,7 +45,7 @@ class MainActivity : ComponentActivity() {
                 .setOutputImageFormat(ImageAnalysis.OUTPUT_IMAGE_FORMAT_RGBA_8888)
                 .build()
 
-            analysis.setAnalyzer(ContextCompat.getMainExecutor(this)) { image ->
+            analysis.setAnalyzer(ContextCompat.getMainExecutor(this)) { image: ImageProxy ->
                 try {
                     val bmp = image.toBitmap()
                     val out = ByteArrayOutputStream()
