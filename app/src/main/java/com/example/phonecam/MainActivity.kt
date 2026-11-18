@@ -45,7 +45,8 @@ class MainActivity : ComponentActivity() {
                 .setOutputImageFormat(ImageAnalysis.OUTPUT_IMAGE_FORMAT_RGBA_8888)
                 .build()
 
-            analysis.setAnalyzer(ContextCompat.getMainExecutor(this)) { image: ImageProxy ->
+            // Fixed the "this" reference here to use this@MainActivity
+            analysis.setAnalyzer(ContextCompat.getMainExecutor(this@MainActivity)) { image: ImageProxy ->
                 try {
                     val bmp = image.toBitmap()
                     val out = ByteArrayOutputStream()
@@ -54,7 +55,8 @@ class MainActivity : ComponentActivity() {
                 } finally { image.close() }
             }
             provider.unbindAll()
-            provider.bindToLifecycle(this, CameraSelector.DEFAULT_BACK_CAMERA, analysis)
-        }, ContextCompat.getMainExecutor(this))
+            // Fixed the "this" reference here as well
+            provider.bindToLifecycle(this@MainActivity, CameraSelector.DEFAULT_BACK_CAMERA, analysis)
+        }, ContextCompat.getMainExecutor(this@MainActivity))
     }
 }
